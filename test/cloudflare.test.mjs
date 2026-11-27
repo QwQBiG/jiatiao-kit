@@ -4,16 +4,17 @@ import { copyFile, cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from '
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { cloudflare } from '../tools/cloudflare.mjs';
 import { configPath, readLocal, saveLocal } from '../tools/cloudflare-config.mjs';
 import { cliRunner } from '../tools/cloudflare-cli.mjs';
 
 const directory = path.dirname(fileURLToPath(import.meta.url));
-const temporary = await mkdtemp(path.join(directory, 'fixtures-'));
+const temporary = await mkdtemp(path.join(tmpdir(), 'jt-test-'));
 after(async () => {
-    assert.equal(path.dirname(temporary), directory);
-    assert.ok(path.basename(temporary).startsWith('fixtures-'));
+    assert.equal(path.dirname(temporary), path.resolve(tmpdir()));
+    assert.ok(path.basename(temporary).startsWith('jt-test-'));
     await rm(temporary, { recursive: true });
 });
 const ACCOUNT = 'a'.repeat(32), PREVIEW = '11111111-1111-4111-8111-111111111111', PRODUCTION = '22222222-2222-4222-8222-222222222222';
@@ -237,18 +238,20 @@ test('active local theme requires explicit consent and only verified files enter
 
 test('real local Wrangler builds Functions and reapplies only local preview migrations', async () => {
     const { root } = await fixture({ ready: true });
-    const sourceRoot = process.cwd();
+    const sourceRoot = path.resolve(directory, '..');
     for (const name of ['public', 'functions', 'migrations']) await cp(path.join(sourceRoot, name), path.join(root, name), {
         recursive: true,
         filter: source => name !== 'public' || !path.relative(path.join(sourceRoot, 'public'), source).split(path.sep).includes('local-theme')
     });
-    const actual = cliRunner(root, () => {});
+    const actual = cliRunner(sourceRoot, () => {});
     let builds = 0;
     await cloudflare(['build'], { root, log() {}, run: async (args, options) => {
         assert.deepEqual(args.slice(0, 3), ['pages', 'functions', 'build']);
         const result = await actual(args, options);
         assert.ok((await readdir(path.join(options.cwd, 'worker'))).length > 0);
-        const migration = ['d1', 'migrations', 'apply', 'DB', '--local', '--env', 'preview'];
+        // Keep SQLite files outside the nested deployment workspace on Windows.
+        const migration = ['d1', 'migrations', 'apply', 'DB', '--local', '--env', 'preview',
+            '--persist-to', path.join(temporary, 'state')];
         assert.ok(migration.includes('--local') && !migration.includes('--remote'));
         await actual(migration, options);
         await actual(migration, options);
