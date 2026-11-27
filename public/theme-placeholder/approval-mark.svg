@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 100" width="128" height="100">
+  <title>审批通过（示例）</title>
+  <g transform="rotate(-16 64 50)" fill="none" stroke="#72bc80">
+    <circle cx="64" cy="50" r="40" stroke-width="2.5"/>
+    <path d="M39 32a31 31 0 0 1 50 0m-50 36a31 31 0 0 0 50 0" stroke-width="1.5"/>
+    <rect x="7" y="37" width="114" height="28" rx="3" fill="#fff" stroke-width="2"/>
+    <g fill="#62ad70" stroke="none" text-anchor="middle" font-family="sans-serif" font-weight="bold">
+      <text x="64" y="32" font-size="11">示例</text>
+      <text x="64" y="59" font-size="22">审批通过</text>
+    </g>
+    <path d="m56 74 5 4 10-9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

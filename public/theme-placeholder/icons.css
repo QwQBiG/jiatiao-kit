@@ -1,3 +1,53 @@
-/* Text glyphs for the no-theme structural view; no font binary is included. */
-.iconsure2::before { content: '\2713'; }
-.iconclose1::before { content: '\00D7'; }
+.iconsure2 {
+    position: relative;
+    display: inline-block;
+    flex: none;
+    width: calc(1em + .53333vw);
+    height: 1em;
+    font-style: normal;
+}
+
+.iconsure2::before {
+    content: "";
+    position: absolute;
+    inset: .075em auto auto .075em;
+    width: .85em;
+    height: .85em;
+    background: currentColor;
+    border-radius: 50%;
+}
+
+.iconsure2::after {
+    content: "";
+    position: absolute;
+    left: .29em;
+    top: .31em;
+    width: .41em;
+    height: .24em;
+    border: solid var(--approval-check, #00ab68);
+    border-width: 0 0 .09em .09em;
+    transform: rotate(-45deg);
+}
+
+.flag-warning .iconsure2 { --approval-check: #f39812; }
+.flag-grey .iconsure2 { --approval-check: #8c95a2; }
+
+.iconclose1 {
+    width: 1em;
+    height: 1em;
+    font-style: normal;
+}
+
+.iconclose1::before, .iconclose1::after {
+    content: "";
+    position: absolute;
+    left: 12%;
+    top: 46%;
+    width: 76%;
+    height: 8%;
+    border-radius: 1em;
+    background: currentColor;
+}
+
+.iconclose1::before { transform: rotate(45deg); }
+.iconclose1::after { transform: rotate(-45deg); }

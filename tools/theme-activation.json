@@ -2,7 +2,7 @@
   {"file":"public/wec-counselor-leave-apps/leave/share/index.html","off":"/theme-placeholder/common.css","on":"/local-theme/share/assets/chunk-common-845c6f103c5c.css"},
   {"file":"public/wec-counselor-leave-apps/leave/share/index.html","off":"/theme-placeholder/vendor.css","on":"/local-theme/share/assets/share-vendors-9d0106abfc33.css"},
   {"file":"public/wec-counselor-leave-apps/leave/share/index.html","off":"/theme-placeholder/icons.css","on":"/local-theme/share/assets/iconfont-1921143-bd128adee010.css"},
-  {"file":"public/wec-counselor-leave-apps/leave/share/index.html","off":"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='838' height='655'/%3E","on":"/local-theme/share/assets/common-pass-286c0aa7573b.png"},
+  {"file":"public/wec-counselor-leave-apps/leave/share/index.html","off":"/theme-placeholder/approval-mark.svg","on":"/local-theme/share/assets/common-pass-286c0aa7573b.png"},
   {"file":"functions/_shared/share-assets.js","off":"/theme-placeholder/common.css","on":"/local-theme/share/assets/chunk-common-845c6f103c5c.css"},
   {"file":"functions/_shared/share-assets.js","off":"/theme-placeholder/vendor.css","on":"/local-theme/share/assets/share-vendors-9d0106abfc33.css"},
   {"file":"functions/_shared/share-assets.js","off":"/theme-placeholder/icons.css","on":"/local-theme/share/assets/iconfont-1921143-bd128adee010.css"},

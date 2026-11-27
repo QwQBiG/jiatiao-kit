@@ -15,6 +15,19 @@ const payload = { serverNow: new Date(BASE).toISOString(), record: {
 
 async function settle() { await nextTurn(); await nextTurn(); }
 
+test('only an available approved record displays the approval mark', async () => {
+    for (const status of ['approved', 'pending', 'rejected']) {
+        const page = fixture({ readyState: 'interactive',
+            fetchImpl: async () => Response.json({ ...payload, record: { ...payload.record, status } }) });
+        await settle();
+        assert.equal(page.element('approvalMark').hidden, status !== 'approved');
+    }
+    const unavailable = fixture({ readyState: 'interactive', fetchImpl: async () => new Response(null, { status: 410 }) });
+    await settle();
+    assert.equal(unavailable.element('approvalMark').hidden, true);
+    assert.equal(unavailable.element('approvalStatus').textContent, '审批状态不可用');
+});
+
 function fixture({ id = ID, readyState = 'loading', fetchImpl = async () => Response.json(payload),
     initial = null, navigationStart = null, scriptAt = 0, navigationEntry = null, receivedAt = null, trackWork = false } = {}) {
     let elapsed = scriptAt;

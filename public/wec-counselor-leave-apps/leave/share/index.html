@@ -85,6 +85,10 @@
             display: none;
         }
 
+        .audit-pass[hidden] {
+            display: none !important;
+        }
+
         .leave-attachment-list {
             display: flex;
             flex-wrap: wrap;
@@ -141,7 +145,7 @@
                             <div class="status-svg-text">
                                 <i class="cat-icon iconfont iconsure2"
                                     style="font-size: 5.33333vw; color: rgb(255, 255, 255);"></i>
-                                <span id="approvalStatus">审批已通过</span>
+                                <span id="approvalStatus">审批状态</span>
                             </div>
                             <div class="status-text-bold" id="statusText"> 正在加载 </div>
                         </div>
@@ -185,8 +189,8 @@
                     </div>
                 </div>
                 <div class="cat-leave-detail hairline-b hairline-t px-20 bg-white py-10 my-10" flow-biz="true">
-                    <img alt=""
-                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='838' height='655'/%3E"
+                    <img id="approvalMark" alt="" hidden
+                        src="/theme-placeholder/approval-mark.svg"
                         data-error="图片加载失败" class="cat-image audit-pass">
                     <div class="font-dark font-14 mb-10"> 我的 请假申请 </div>
                     <div class="flex mb-5 font-12 items-center relative">
@@ -319,7 +323,7 @@
     </div>
 
     <!--__LEAVE_BOOTSTRAP__-->
-    <script src="./app.js?v=ab0d67bb9bb9" async fetchpriority="high"></script>
+    <script src="./app.js?v=6360aaf16aa4" async fetchpriority="high"></script>
 </body>
 
 </html>
