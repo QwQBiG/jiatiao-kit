@@ -1,6 +1,143 @@
-/* Independent loading fallback; the imported vendor theme replaces this sheet. */
-.van-toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; align-items: center; }
-.van-loading__spinner { display: block; width: 24px; height: 24px; border: 3px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: placeholder-spin 1s linear infinite; }
-.van-loading__spinner > i { display: none; }
-.van-toast__text { margin-top: 8px; }
-@keyframes placeholder-spin { to { transform: rotate(360deg); } }
+.van-toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: content-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 23.46667vw;
+    min-height: 23.46667vw;
+    max-width: 70%;
+    padding: 4.26667vw;
+    border-radius: 2.13333vw;
+    background: rgba(50, 50, 51, .88);
+    color: white;
+    text-align: center;
+    font-size: 3.73333vw;
+    line-height: 5.33333vw;
+    white-space: pre-wrap;
+}
+
+.van-toast__loading { padding: 1.06667vw; font-size: 0; }
+.van-toast__text { margin-top: 2.13333vw; }
+
+.van-loading__spinner {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 8vw;
+    height: 8vw;
+    max-width: 100%;
+    max-height: 100%;
+    animation: loading-turn .8s steps(12) infinite;
+}
+
+.van-loading__spinner > i {
+    position: absolute;
+    inset: 0;
+    transform: rotate(calc(var(--spoke) * 30deg));
+    opacity: calc((17 - var(--spoke)) / 16);
+}
+
+.van-loading__spinner > i::before {
+    content: "";
+    display: block;
+    width: .53333vw;
+    height: 25%;
+    margin: 0 auto;
+    border-radius: 999px;
+    background: currentColor;
+}
+
+.van-loading__spinner > :nth-child(1) { --spoke: 1; }
+.van-loading__spinner > :nth-child(2) { --spoke: 2; }
+.van-loading__spinner > :nth-child(3) { --spoke: 3; }
+.van-loading__spinner > :nth-child(4) { --spoke: 4; }
+.van-loading__spinner > :nth-child(5) { --spoke: 5; }
+.van-loading__spinner > :nth-child(6) { --spoke: 6; }
+.van-loading__spinner > :nth-child(7) { --spoke: 7; }
+.van-loading__spinner > :nth-child(8) { --spoke: 8; }
+.van-loading__spinner > :nth-child(9) { --spoke: 9; }
+.van-loading__spinner > :nth-child(10) { --spoke: 10; }
+.van-loading__spinner > :nth-child(11) { --spoke: 11; }
+.van-loading__spinner > :nth-child(12) { --spoke: 12; }
+
+@keyframes loading-turn { to { transform: rotate(1turn); } }
+
+.cat-personal-modal {
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.personal-info-box {
+    box-sizing: border-box;
+    max-height: 70vh;
+    overflow: hidden;
+    padding: 4vw;
+    border-radius: 2.13333vw;
+}
+
+.info-box-title {
+    position: relative;
+    padding-bottom: 4vw;
+    font-size: 4.26667vw;
+    text-align: center;
+}
+
+.info-box-content { overflow-y: auto; }
+.info-box-content .row-wrap { max-height: 50vh; }
+.box-content-row { line-height: 4.26667vw; }
+
+.van-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    background: white;
+    border-radius: 4.26667vw;
+    font-size: 4.26667vw;
+}
+
+.van-dialog__header {
+    padding-top: 5.33333vw;
+    color: #464c5b;
+    font-weight: 700;
+    line-height: 6.4vw;
+    text-align: center;
+}
+
+.van-dialog__footer { position: relative; overflow: hidden; }
+.van-dialog__footer::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    transform: scaleY(.5);
+    transform-origin: top;
+    background: #ebedf0;
+    pointer-events: none;
+}
+
+.van-dialog__confirm {
+    display: block;
+    width: 100%;
+    height: 13.33333vw;
+    padding: 0;
+    border: 0;
+    border-radius: .53333vw;
+    background: white;
+    color: #39f;
+    font: inherit;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.van-dialog__confirm:active { background: #f5f6f8; }
+.van-button__content { display: flex; height: 100%; align-items: center; justify-content: center; }
+.van-button__text { font-size: 3.73333vw; }

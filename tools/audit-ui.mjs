@@ -5,7 +5,8 @@ import { listPlainFiles, fingerprint } from './theme-files.mjs';
 import { verifyThemeActivation } from './local-theme.mjs';
 
 const projectRoot = fileURLToPath(new URL('../', import.meta.url));
-const allowedImages = new Set(['share-card/assets/leave-calendar.svg', 'share-card/assets/leave-calendar-a3e862826a10.png']);
+const allowedImages = new Set(['share-card/assets/leave-calendar.svg', 'share-card/assets/leave-calendar-a3e862826a10.png',
+    'theme-placeholder/approval-mark.svg']);
 
 export async function auditUi(root = projectRoot) {
     if ((await verifyThemeActivation(root)).active) throw Error('Restore the no-theme view before auditing the public source package');

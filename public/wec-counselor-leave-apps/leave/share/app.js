@@ -168,6 +168,12 @@
         container.appendChild(row);
     }
 
+    function showApproval(label, approved) {
+        setText('approvalStatus', label);
+        var mark = byId('approvalMark');
+        if (mark) mark.hidden = !approved;
+    }
+
     function renderRecord(payload, readyAt) {
         var record = payload.record;
         var startDate = new Date(record.startAt);
@@ -180,7 +186,7 @@
         pageState.statusView = { startDate: startDate, endDate: endDate, phase: null };
         // Preserve time spent waiting for the document after the response was read.
         pageState.serverOffsetMs = Date.parse(payload.serverNow) + (performance.now() - readyAt) - Date.now();
-        setText('approvalStatus', '审批' + record.approvalLabel);
+        showApproval('审批' + record.approvalLabel, record.status === 'approved');
         setText('userShortName', record.shortName || record.name.slice(-2));
         setText('userName', record.name);
         setText('userInfo', record.gender + '生' + record.studentId);
@@ -225,7 +231,7 @@
         pageState.statusView = null;
         pageState.serverOffsetMs = 0;
         clearRecordFields('-');
-        setText('approvalStatus', '审批已通过');
+        showApproval('审批状态不可用', false);
         setFlag('flag-grey', message);
         updateClock();
     }
