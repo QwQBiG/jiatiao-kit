@@ -54,4 +54,4 @@ npm run cloudflare
 
 本项目仅供学习、界面展示与测试。假条界面的视觉参考来自「今日校园」，本项目与其运营方及学校无隶属或合作关系。演示页面不能作为真实审批或通行凭证。请勿用于伪造审批、冒用身份、误导他人或披露个人信息。
 
-项目自有代码、文档和演示图片采用 [Apache License 2.0](LICENSE)，署名见 [NOTICE](NOTICE)。第三方依赖和使用者自备的主题素材适用各自的许可。[贡献说明](CONTRIBUTING.md)
+项目自有代码、文档和演示图片采用 [Apache License 2.0](LICENSE)，署名见 [NOTICE](NOTICE)。第三方依赖和使用者自备的主题素材适用各自的许可。[更新记录](CHANGELOG.md) · [贡献说明](CONTRIBUTING.md)
