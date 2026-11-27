@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow,noarchive">
+    <title>演示数据管理</title>
+    <meta name="theme-color" content="#29465b">
+    <link rel="stylesheet" href="./admin.css?v=attachments-1">
+    <link rel="preload" as="image" data-local-theme-href="/local-theme/admin/assets/waterside-d055d2a8bd68.webp" media="(min-width: 721px)" fetchpriority="low">
+    <link rel="preload" as="image" data-local-theme-href="/local-theme/admin/assets/waterside-mobile-9e2614bf0831.webp" media="(max-width: 720px)" fetchpriority="low">
+    <link rel="modulepreload" href="./admin-model.js?v=polish-1">
+    <link rel="modulepreload" href="./attachment-thumbnails.js?v=attachments-1">
+    <link rel="modulepreload" href="/share-card/share.js?v=3">
+</head>
+<body data-loading>
+    <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <symbol id="i-record" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></symbol>
+        <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/><circle cx="9" cy="7" r="4"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></symbol>
+        <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 11a9 9 0 1 1 2.7 7M3 4v7h7M12 7v5l3 2"/></symbol>
+        <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5M6.1 6.1A8 8 0 0 1 20 12M4 12a8 8 0 0 0 13.9 5.9"/></symbol>
+        <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></symbol>
+        <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></symbol>
+    </svg>
+    <div class="application">
+    <aside class="sidebar" aria-label="工作空间导航">
+        <div class="brand">
+            <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 7h8v18H7zm12 0h6v8h-6zm0 12h6v6h-6z"/></svg></span>
+            <div><strong>演示数据管理</strong><small>请假记录工作空间</small></div>
+        </div>
+        <nav class="tabs owner-only" aria-label="管理栏目">
+            <p class="nav-label">工作空间</p>
+            <button class="active" data-tab="students" type="button"><svg class="ui-icon" aria-hidden="true"><use href="#i-record"/></svg>学生记录<span class="nav-indicator" aria-hidden="true"></span></button>
+            <button data-tab="members" type="button"><svg class="ui-icon" aria-hidden="true"><use href="#i-users"/></svg>成员权限<span class="nav-indicator" aria-hidden="true"></span></button>
+            <button data-tab="audit" type="button"><svg class="ui-icon" aria-hidden="true"><use href="#i-history"/></svg>操作记录<span class="nav-indicator" aria-hidden="true"></span></button>
+        </nav>
+        <div class="sidebar-bottom">
+            <span class="environment-dot" aria-hidden="true"></span>
+            <div><strong>演示环境</strong><small>仅用于演示数据维护</small></div>
+            <svg class="ui-icon" aria-hidden="true"><use href="#i-lock"/></svg>
+        </div>
+    </aside>
+    <div class="main-area">
+    <header class="topbar">
+        <p class="breadcrumb"><svg class="ui-icon" aria-hidden="true"><use href="#i-record"/></svg>管理中心<span aria-hidden="true">/</span><strong>请假数据</strong></p>
+        <div class="topbar-actions">
+            <span class="account"><svg class="ui-icon" aria-hidden="true"><use href="#i-lock"/></svg><span id="accountText">正在验证身份…</span></span>
+            <span class="sync-status" id="syncStatus" role="status">正在连接</span>
+            <button class="ghost" id="refreshButton" type="button"><svg class="ui-icon" aria-hidden="true"><use href="#i-refresh"/></svg><span>刷新</span></button>
+        </div>
+    </header>
+
+    <main class="shell">
+        <div class="page-notice" id="pageNotice" role="alert" hidden><span id="noticeText"></span><button class="ghost" id="retryButton" type="button">重试</button></div>
+        <section class="hero">
+            <div><p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>请假记录管理</p><h1 id="welcomeTitle">数据工作台</h1>
+                <p id="welcomeText">通过受保护的页面维护演示记录。</p></div>
+            <button class="primary owner-only" id="addStudentButton" type="button" disabled><svg class="ui-icon" aria-hidden="true"><use href="#i-plus"/></svg>新增学生</button>
+            <button class="primary member-only" id="addOwnLeaveButton" type="button" hidden disabled><svg class="ui-icon" aria-hidden="true"><use href="#i-plus"/></svg>新增本人请假</button>
+        </section>
+
+        <section class="stats owner-only" aria-label="数据概览">
+            <article><div class="stat-copy"><span>学生档案</span><div class="stat-value"><strong id="studentCount">—</strong><span>位</span></div><small>每人保留最近 100 条请假</small></div><span class="stat-icon"><svg class="ui-icon" aria-hidden="true"><use href="#i-record"/></svg></span></article>
+            <article><div class="stat-copy"><span>未停用记录</span><div class="stat-value"><strong id="activeCount">—</strong><span>条</span></div><small>包含历史请假记录</small></div><span class="stat-icon"><svg class="ui-icon" aria-hidden="true"><use href="#i-check"/></svg></span></article>
+            <article><div class="stat-copy"><span>可登录成员</span><div class="stat-value"><strong id="memberCount">—</strong><span>位</span></div><small>当前允许登录的账号</small></div><span class="stat-icon"><svg class="ui-icon" aria-hidden="true"><use href="#i-users"/></svg></span></article>
+        </section>
+
+        <div class="workspace">
+        <div class="workspace-content">
+        <section class="panel" id="studentsPanel">
+            <div class="panel-head">
+                <div><h2 id="studentPanelTitle">学生记录</h2><p id="studentPanelHint">查看、编辑或停用演示数据。</p></div>
+                <label class="search-field owner-only" for="searchInput"><span class="sr-only">搜索姓名、学号或班级</span><span class="search-control"><svg class="ui-icon" aria-hidden="true"><use href="#i-search"/></svg><input class="search" id="searchInput" type="search" placeholder="搜索姓名、学号或班级" title="快捷键 / 或 Ctrl+K"></span></label>
+            </div>
+            <div class="list-toolbar owner-only">
+                <div class="filter-chips" role="group" aria-label="按每位学生的最新请假记录筛选" title="仅按每位学生的最新一条请假记录筛选">
+                    <button type="button" data-filter="all" aria-pressed="true">全部学生</button>
+                    <button type="button" data-filter="active" aria-pressed="false">最新未停用</button>
+                    <button type="button" data-filter="disabled" aria-pressed="false">最新已停用</button>
+                </div>
+                <label class="sort-control">排序<select id="sortSelect"><option value="studentId">按学号</option><option value="updated">最近更新</option></select></label>
+            </div>
+            <div class="table-wrap owner-only"><table role="table" aria-label="学生请假记录">
+                <thead><tr><th>学生 / 历史记录</th><th>最新请假时间</th><th>审批 / 停用状态</th><th>最近更新</th><th>快捷操作</th></tr></thead>
+                <tbody id="studentRows"><tr><td colspan="5" class="loading-cell">正在读取学生记录…</td></tr></tbody>
+            </table></div>
+            <div id="selfEditor" class="self-editor member-only" hidden></div>
+            <div class="empty" id="studentEmpty" hidden><svg class="ui-icon" aria-hidden="true"><use href="#i-search"/></svg><strong>没有匹配的记录</strong><span>试试其他姓名或学号</span><button class="ghost" id="resetFiltersButton" type="button" hidden>清空搜索和筛选</button></div>
+            <div class="list-pager owner-only" id="studentPager" hidden></div>
+            <footer class="panel-foot owner-only"><span><svg class="ui-icon" aria-hidden="true"><use href="#i-lock"/></svg>演示数据，仅供演示使用</span><span>请妥善保管分享链接</span></footer>
+        </section>
+
+        <section class="panel owner-only" id="membersPanel" hidden>
+            <div class="panel-head"><div><h2>成员权限</h2><p>登录邮箱只能绑定一个学号。</p></div>
+                <button class="secondary" id="addMemberButton" type="button"><svg class="ui-icon" aria-hidden="true"><use href="#i-plus"/></svg>绑定成员</button></div>
+            <div class="cards" id="memberCards"></div>
+        </section>
+
+        <section class="panel owner-only" id="auditPanel" hidden>
+            <div class="panel-head"><div><h2>操作记录</h2><p>保留最近 100 条后台变更。</p></div></div>
+            <div class="timeline" id="auditList"></div>
+        </section>
+        </div>
+        </div>
+    </main>
+    <footer class="page-foot"><span>演示数据管理</span><span>记录 · 成员 · 操作</span></footer>
+    </div>
+    </div>
+
+    <dialog id="studentDialog" aria-labelledby="formTitle" aria-describedby="studentFormHint">
+        <form method="dialog" id="studentForm">
+            <header><div class="dialog-heading"><span class="dialog-mark"><svg class="ui-icon" aria-hidden="true"><use href="#i-record"/></svg></span><div><h2 id="formTitle">编辑学生</h2><p id="studentFormHint">带 * 的字段必须填写；灰色虚线字段为只读。</p></div></div><button class="icon" type="button" data-close aria-label="关闭"><svg class="ui-icon" aria-hidden="true"><use href="#i-close"/></svg></button></header>
+            <div class="editor-sections" id="studentFields"></div>
+            <p class="form-error" id="studentError" role="alert" hidden></p>
+            <footer><button class="ghost" value="cancel" type="button" data-close>取消</button>
+                <button class="primary" id="saveStudentButton" type="submit">保存</button></footer>
+        </form>
+    </dialog>
+
+    <dialog id="memberDialog" aria-labelledby="memberFormTitle" aria-describedby="memberFormHint">
+        <form method="dialog" id="memberForm">
+            <header><div class="dialog-heading"><span class="dialog-mark"><svg class="ui-icon" aria-hidden="true"><use href="#i-users"/></svg></span><div><h2 id="memberFormTitle">绑定成员</h2><p id="memberFormHint">成员登录后只能编辑绑定学号的数据</p></div></div><button class="icon" type="button" data-close aria-label="关闭"><svg class="ui-icon" aria-hidden="true"><use href="#i-close"/></svg></button></header>
+            <div class="form-grid one">
+                <label>姓名 *<input name="displayName" required></label>
+                <label>登录邮箱 *<input name="email" type="email" required></label>
+                <label>绑定学号 *<select name="studentId" required id="memberStudentSelect"></select></label>
+                <div class="binding-review" id="memberBindingReview" role="status" aria-live="polite"></div>
+            </div>
+            <footer><button class="ghost" value="cancel" type="button" data-close>取消</button>
+                <button class="primary" id="saveMemberButton" type="submit">保存绑定</button></footer>
+        </form>
+    </dialog>
+
+    <dialog id="historyDialog" aria-labelledby="historyTitle">
+        <form method="dialog">
+            <header><div><h2 id="historyTitle">请假记录</h2><p>保留最近 100 条；超出的最早记录及链接自动移除。</p></div>
+                <div class="dialog-actions"><button class="primary owner-only" id="addLeaveButton" type="button">新增请假</button><button class="icon" type="button" data-close aria-label="关闭历史记录"><svg class="ui-icon" aria-hidden="true"><use href="#i-close"/></svg></button></div></header>
+            <div class="form-grid one" id="historyRecords"></div>
+            <div class="list-pager" id="historyPager" hidden></div>
+            <footer><button class="ghost" type="button" data-close>关闭</button></footer>
+        </form>
+    </dialog>
+
+    <dialog id="shareDialog" aria-labelledby="shareTitle">
+        <form method="dialog">
+            <header><div><h2 id="shareTitle">分享链接</h2></div><button class="icon" type="button" data-close aria-label="关闭分享链接"><svg class="ui-icon" aria-hidden="true"><use href="#i-close"/></svg></button></header>
+            <div class="form-grid one">
+                <label>完整链接<textarea id="shareLink" readonly rows="4"></textarea></label>
+            </div>
+            <footer><button class="ghost" id="selectLinkButton" type="button">选中链接</button><button class="secondary" id="copyShareButton" type="button">复制链接</button><a class="primary" id="openShareLink" target="_blank" rel="noopener noreferrer">打开页面</a></footer>
+        </form>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="./admin.js?v=attachments-1"></script>
+</body>
+</html>

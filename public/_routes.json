@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "include": ["/api/*", "/admin/api/*", "/wec-counselor-leave-apps/leave/share/", "/wec-counselor-leave-apps/leave/share/index", "/wec-counselor-leave-apps/leave/share/index.html"],
+  "exclude": []
+}
