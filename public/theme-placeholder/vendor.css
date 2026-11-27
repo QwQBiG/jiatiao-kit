@@ -1,0 +1,6 @@
+/* Independent loading fallback; the imported vendor theme replaces this sheet. */
+.van-toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; align-items: center; }
+.van-loading__spinner { display: block; width: 24px; height: 24px; border: 3px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: placeholder-spin 1s linear infinite; }
+.van-loading__spinner > i { display: none; }
+.van-toast__text { margin-top: 8px; }
+@keyframes placeholder-spin { to { transform: rotate(360deg); } }

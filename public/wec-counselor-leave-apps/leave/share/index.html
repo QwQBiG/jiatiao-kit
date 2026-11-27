@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="no-referrer">
+    <meta name="robots" content="noindex,nofollow,noarchive">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+    <title>请假</title>
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="请假">
+    <meta property="og:title" content="请假">
+    <meta property="og:description" content="请假">
+    <meta property="og:url" content="__CARD_PAGE_URL__">
+    <!-- 【临时缩略图占位】图片统一配置在 public/share-card/share.js 的 CARD_IMAGE_PATH。
+         __CARD_IMAGE_URL__ 由服务器填成本站图片的完整地址；这里不使用过期签名链接。
+         这些标签供平台抓取，实际聊天卡片由微信、QQ 决定，不影响下方正文样式。 -->
+    <meta property="og:image" content="__CARD_IMAGE_URL__">
+    <meta property="og:image:width" content="200">
+    <meta property="og:image:height" content="200">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="请假信息图标">
+    <meta name="description" content="请假">
+    <link rel="image_src" href="__CARD_IMAGE_URL__">
+    <link rel="icon" href="data:,">
+    <link
+        href="/theme-placeholder/common.css"
+        rel="stylesheet">
+    <link
+        href="/theme-placeholder/vendor.css"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/theme-placeholder/icons.css">
+    <style>
+        body {
+            background-color: #f2f4f8;
+        }
+
+        .items-center { align-items: center; }
+        .items-start { align-items: flex-start; }
+
+        .personal-info,
+        .font-primary.ml-5,
+        .location {
+            cursor: pointer;
+        }
+
+        .van-toast {
+            z-index: 2001 !important;
+        }
+
+        .cat-personal-modal,
+        .rule-modal-mask {
+            transition: opacity 0.3s ease;
+        }
+
+        #app.is-loading .cat-status-flag,
+        #app.is-loading .cat-leave-detail {
+            display: none;
+        }
+
+        #app.is-loading .cat-status-show .flex-1,
+        #app.is-loading .short-name span {
+            visibility: hidden;
+        }
+
+        #initialLoadingToast {
+            width: 32vw;
+            height: 32vw;
+            max-width: 128px;
+            max-height: 128px;
+            min-width: 0;
+            padding: 0;
+            flex-direction: column;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 8px;
+        }
+
+        #leaveAttachments:empty {
+            display: none;
+        }
+
+        .leave-attachment-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            min-width: 0;
+        }
+
+        .leave-attachment-thumb {
+            display: flex;
+            flex: 0 0 auto;
+            align-items: center;
+            justify-content: center;
+            width: 13.33333vw;
+            height: 13.33333vw;
+            max-width: 56px;
+            max-height: 56px;
+            overflow: hidden;
+            background: #f2f4f8;
+        }
+
+        .leave-attachment-thumb img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .leave-attachment-thumb.is-error {
+            color: #9ea7b4;
+            font-size: 10px;
+            line-height: 1.3;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="van-toast van-toast--middle van-toast--loading" id="initialLoadingToast" style="z-index: 2001; display: flex;">
+        <div class="van-loading van-loading--spinner van-toast__loading">
+            <span class="van-loading__spinner van-loading__spinner--spinner">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </span>
+        </div>
+        <div class="van-toast__text">加载中...</div>
+    </div>
+
+    <div id="app" class="is-loading">
+        <div class="page-share flex-col flex-1 h-screen overflow-hidden">
+            <div class="flex-col flex-1 ios-touch-scroll">
+                <div class="cat-status-flag no-shrink">
+                    <div class="flag-dom relative flag-success" id="statusFlag">
+                        <span class="personal-info absolute" id="personalInfoBtn">个人信息 &gt;</span>
+                        <div class="flag-text">
+                            <div class="status-svg-text">
+                                <i class="cat-icon iconfont iconsure2"
+                                    style="font-size: 5.33333vw; color: rgb(255, 255, 255);"></i>
+                                <span id="approvalStatus">审批已通过</span>
+                            </div>
+                            <div class="status-text-bold" id="statusText"> 正在加载 </div>
+                        </div>
+                        <div class="dynamic-strip no-shrink">
+                            <div class="now-time"> 当前时间:<span id="liveTime">----</span> </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cat-status-show bg-white no-shrink">
+                    <div class="bg-white px-20 flex items-center py-10">
+                        <div class="short-name radius-circle bg-primary font-white font-14 no-shrink mr-10 text-center">
+                            <span id="userShortName">-</span>
+                        </div>
+                        <div class="flex-1 font-14">
+                            <div class="font-dark" id="userName"> - </div>
+                            <div class="font-normal" id="userInfo"> - </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cat-flow-leave-meta hairline-b py-10 font-12 bg-white px-20 no-shrink">
+                    <div class="flex">
+                        <div class="flex mb-5 flex-1">
+                            <div class="font-light no-shrink row-label"> 请假类型： </div>
+                            <div class="font-normal flex-1 mr-5" id="leaveType"> - </div>
+                        </div>
+                        <div class="flex mb-5 flex-1">
+                            <div class="font-light no-shrink row-label"> 需要离校： </div>
+                            <div class="flex-1 mr-5"><span class="font-normal" id="needLeaveSchool">-</span></div>
+                        </div>
+                    </div>
+                    <div class="flex mb-5">
+                        <div class="font-light no-shrink row-label"> 销假规则： </div>
+                        <div class="font-normal flex-1 mr-5">
+                            <span class="font-warning">规则由使用者自行配置，示例不代表实际规定</span>
+                            <span class="font-primary ml-5" id="viewRuleBtn">查看 &gt;</span>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="font-light no-shrink"> 实际休假时间： </div>
+                        <div class="font-normal flex-1 mr-5" id="actualLeaveTime"><span>-</span></div>
+                    </div>
+                </div>
+                <div class="cat-leave-detail hairline-b hairline-t px-20 bg-white py-10 my-10" flow-biz="true">
+                    <img alt=""
+                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='838' height='655'/%3E"
+                        data-error="图片加载失败" class="cat-image audit-pass">
+                    <div class="font-dark font-14 mb-10"> 我的 请假申请 </div>
+                    <div class="flex mb-5 font-12 items-center relative">
+                        <div class="totalDays pin-t pin-r absolute font-14 bold px-10 py-5 font-primary radius-small"
+                            id="totalDays"> - </div>
+                        <div class="font-light no-shrink row-label"> 开始时间： </div>
+                        <div class="font-normal flex-1 ml-5 bold" id="startTime"> - </div>
+                    </div>
+                    <div class="flex mb-5 font-12 items-center">
+                        <div class="font-light no-shrink row-label"> 结束时间： </div>
+                        <div class="font-normal flex-1 ml-5 bold" id="endTime"> - </div>
+                    </div>
+                    <div class="flex mb-5 font-12 items-center">
+                        <div class="font-light no-shrink row-label"> 审批流程： </div>
+                        <div class="font-normal flex-1 ml-5"> 共1步 </div>
+                    </div>
+                    <div class="flex mb-5 font-12 items-start">
+                        <div class="font-light no-shrink row-label" style="width: 16vw;"> 审批人： </div>
+                        <div class="font-normal flex-1 ml-5 break-all" id="approver"> - </div>
+                    </div>
+                    <div class="flex mb-5 font-12 items-start mb-5">
+                        <div class="font-light no-shrink row-label"> 请假原因： </div>
+                        <div class="font-normal flex-1 ml-5 break-all" id="reason"> - </div>
+                    </div>
+                    <div class="flex mb-5 font-12 items-center">
+                        <div class="font-light no-shrink row-label"> 发起位置： </div>
+                        <div class="font-normal flex-1 ml-5">
+                            <span class="location" style="color: rgb(51, 153, 255); cursor: pointer;"
+                                id="location">-</span>
+                        </div>
+                    </div>
+                    <div class="flex mb-5 font-12 items-center">
+                        <div class="font-light no-shrink row-label" style="width: 16vw;"> 抄送人： </div>
+                        <div class="font-normal flex-1 ml-5"><span class="location">无</span></div>
+                    </div>
+                    <div class="flex mb-5 font-12 items-start">
+                        <div class="font-light no-shrink row-label"> 宿舍信息： </div>
+                        <div class="font-normal flex-1 ml-5 break-all"> - </div>
+                    </div>
+                    <div id="leaveAttachments"></div>
+                    <div class="flex mb-5 font-12 items-center font-warning text-justify break-all">
+                        本页仅用于学习展示，不代表任何机构的审批结果，不可作为请假或通行凭证。 </div>
+                </div>
+            </div>
+
+            <div class="cat-personal-modal flex-center flex-1 h-screen w-screen absolute pin-l pin-t" id="personalModal"
+                style="display: none; background: rgba(0, 0, 0, 0.5); z-index: 1000;">
+                <div class="personal-info-box px-15 py-15 radius-normal overflow-hidden"
+                    style="background: white; width: 85%; max-width: 320px;">
+                    <div class="info-box-title font-16 font-normal text-center pb-15 relative">
+                        <span class="font-bold">个人信息</span>
+                        <i class="absolute close-icon cat-icon iconfont iconclose1" id="closeModalBtn"
+                            style="font-size: 4.8vw; color: rgb(101, 113, 128); cursor: pointer; right: 0; top: 0;"></i>
+                    </div>
+                    <div class="info-box-content overflow-y-auto">
+                        <div class="row-wrap">
+                            <div class="box-content-row font-14 font-normal font-bold flex mb-10 items-start">
+                                <div class="content-row-label mr-5 no-shrink"> • 照片： </div>
+                                <div class="content-row-value flex-1"> - </div>
+                            </div>
+                            <div class="box-content-row font-14 font-normal font-bold flex mb-10 items-start">
+                                <div class="content-row-label mr-5 no-shrink"> • 姓名： </div>
+                                <div class="content-row-value flex-1" id="modalUserName"> - </div>
+                            </div>
+                            <div class="box-content-row font-14 font-normal font-bold flex mb-10 items-start">
+                                <div class="content-row-label mr-5 no-shrink"> • 学号： </div>
+                                <div class="content-row-value flex-1" id="modalUserId"> - </div>
+                            </div>
+                            <div class="box-content-row font-14 font-normal font-bold flex mb-10 items-start">
+                                <div class="content-row-label mr-5 no-shrink"> • 性别： </div>
+                                <div class="content-row-value flex-1" id="modalGender"> - </div>
+                            </div>
+                            <div class="box-content-row font-14 font-normal font-bold flex mb-10 items-start">
+                                <div class="content-row-label mr-5 no-shrink"> • 年级： </div>
+                                <div class="content-row-value flex-1" id="modalGrade"> - </div>
+                            </div>
+                            <div class="box-content-row font-14 font-normal font-bold flex mb-10 items-start">
+                                <div class="content-row-label mr-5 no-shrink"> • 学院： </div>
+                                <div class="content-row-value flex-1" id="modalCollege"> - </div>
+                            </div>
+                            <div class="box-content-row font-14 font-normal font-bold flex mb-10 items-start">
+                                <div class="content-row-label mr-5 no-shrink"> • 专业： </div>
+                                <div class="content-row-value flex-1" id="modalMajor"> - </div>
+                            </div>
+                            <div class="box-content-row font-14 font-normal font-bold flex mb-10 items-start">
+                                <div class="content-row-label mr-5 no-shrink"> • 班级： </div>
+                                <div class="content-row-value flex-1" id="modalClassName"> - </div>
+                            </div>
+                            <div class="box-content-row font-14 font-normal font-bold flex mb-10 items-start">
+                                <div class="content-row-label mr-5 no-shrink"> • 宿舍： </div>
+                                <div class="content-row-value flex-1" id="modalDorm"> - </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ruleModal" class="rule-modal-mask"
+                style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 2010;">
+                <div role="dialog" class="bus-flow-chart-modal van-dialog" style="width: 85%; max-width: 320px;">
+                    <div class="van-dialog__header">
+                        <div><b>销假规则说明</b></div>
+                    </div>
+                    <div class="van-dialog__content">
+                        <div class="p-20 font-14 font-normal flex-col">
+                            <div class="mb-10"> • 开启时间：<span id="ruleEnabledAt">-</span> </div>
+                            <div> • 操作人：<span id="ruleOperator">-</span> </div>
+                        </div>
+                    </div>
+                    <div class="van-hairline--top van-dialog__footer">
+                        <button class="van-button van-button--default van-button--large van-dialog__confirm"
+                            id="closeRuleBtn">
+                            <div class="van-button__content">
+                                <span class="van-button__text">知道了</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="van-toast van-toast--middle van-toast--loading" id="loadingToast" style="z-index: 2001; display: none;">
+        <div class="van-loading van-loading--spinner van-toast__loading">
+            <span class="van-loading__spinner van-loading__spinner--spinner">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </span>
+        </div>
+        <div class="van-toast__text">加载中...</div>
+    </div>
+
+    <!--__LEAVE_BOOTSTRAP__-->
+    <script src="./app.js?v=ab0d67bb9bb9" async fetchpriority="high"></script>
+</body>
+
+</html>

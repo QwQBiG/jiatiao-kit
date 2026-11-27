@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "files": [
+    {
+      "source": "wec-counselor-leave-apps/leave/share/assets/chunk-common-845c6f103c5c.css",
+      "path": "share/assets/chunk-common-845c6f103c5c.css",
+      "bytes": 15619,
+      "sha256": "845c6f103c5c0636157573bc67815765525b87025edb83c8e55970e55233416b"
+    },
+    {
+      "source": "wec-counselor-leave-apps/leave/share/assets/share-vendors-9d0106abfc33.css",
+      "path": "share/assets/share-vendors-9d0106abfc33.css",
+      "bytes": 9580,
+      "sha256": "9d0106abfc33c9e210d9a718a42e6d8b8ea7a6f669e1a50e34a87a667ea83d77"
+    },
+    {
+      "source": "wec-counselor-leave-apps/leave/share/assets/iconfont-1921143-bd128adee010.css",
+      "path": "share/assets/iconfont-1921143-bd128adee010.css",
+      "bytes": 8634,
+      "sha256": "bd128adee010333af689ab82213a2a86c18657da41f69d815f82216a3a099bcd"
+    },
+    {
+      "source": "wec-counselor-leave-apps/leave/share/assets/font_1921143_afl404vl6g-0fcf02e1f8fe.ttf",
+      "path": "share/assets/font_1921143_afl404vl6g-0fcf02e1f8fe.ttf",
+      "bytes": 45308,
+      "sha256": "0fcf02e1f8fe1e4c834ef173a101b855d74b0eafdadbce500f9e8ec5fe3b1008"
+    },
+    {
+      "source": "wec-counselor-leave-apps/leave/share/assets/font_1921143_afl404vl6g-5cc55d8186d4.woff2",
+      "path": "share/assets/font_1921143_afl404vl6g-5cc55d8186d4.woff2",
+      "bytes": 24012,
+      "sha256": "5cc55d8186d450e7e237fdbb65061a745d3229c0cb71f4826e6c12700995bdf6"
+    },
+    {
+      "source": "wec-counselor-leave-apps/leave/share/assets/font_1921143_afl404vl6g-70137ab36424.woff",
+      "path": "share/assets/font_1921143_afl404vl6g-70137ab36424.woff",
+      "bytes": 28324,
+      "sha256": "70137ab3642496d3726062e341a17b949bfa5e9987aec97ac4c623a8df1afedd"
+    },
+    {
+      "source": "wec-counselor-leave-apps/leave/share/assets/vant-icon-6ae417-2dff9be83b8a.ttf",
+      "path": "share/assets/vant-icon-6ae417-2dff9be83b8a.ttf",
+      "bytes": 56244,
+      "sha256": "2dff9be83b8a2747eb3be7360412baf854732f56281604febcd69b039a56cc3d"
+    },
+    {
+      "source": "wec-counselor-leave-apps/leave/share/assets/vant-icon-6ae417-220d6d35ce8c.woff2",
+      "path": "share/assets/vant-icon-6ae417-220d6d35ce8c.woff2",
+      "bytes": 23388,
+      "sha256": "220d6d35ce8c88380c00a9d513fbaccb7ea16327709dc5d9a08667aa7b35a0f9"
+    },
+    {
+      "source": "wec-counselor-leave-apps/leave/share/assets/vant-icon-6ae417-71b1584ad19a.woff",
+      "path": "share/assets/vant-icon-6ae417-71b1584ad19a.woff",
+      "bytes": 27868,
+      "sha256": "71b1584ad19ad0f4ddace198bc342a59afbbdba3f63b3d6f49611613cdedda81"
+    },
+    {
+      "source": "wec-counselor-leave-apps/leave/share/assets/common-pass-286c0aa7573b.png",
+      "path": "share/assets/common-pass-286c0aa7573b.png",
+      "bytes": 30441,
+      "sha256": "286c0aa7573b63ee2bb128d8cf33487e4222df6e41407c97716cd77c15ae1477"
+    },
+    {
+      "source": "admin/assets/waterside-d055d2a8bd68.webp",
+      "path": "admin/assets/waterside-d055d2a8bd68.webp",
+      "bytes": 597058,
+      "sha256": "d055d2a8bd68caa39ada54471113be7741992b13b1699a214705eafd4f41c7da"
+    },
+    {
+      "source": "admin/assets/waterside-mobile-9e2614bf0831.webp",
+      "path": "admin/assets/waterside-mobile-9e2614bf0831.webp",
+      "bytes": 228792,
+      "sha256": "9e2614bf083148aa8f72a319d192479333f11183118124d76d47e21ff5687c89"
+    }
+  ]
+}

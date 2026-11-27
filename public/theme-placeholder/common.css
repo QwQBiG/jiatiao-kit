@@ -1,0 +1,19 @@
+/* Independent structural fallback, replaced entirely by an authorized local theme. */
+body { margin: 0; font-family: system-ui, sans-serif; line-height: 1.6; }
+.flex { display: flex; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-1 { flex: 1; min-width: 0; }
+.no-shrink { flex-shrink: 0; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.pin-t { top: 0; }
+.pin-r { right: 0; }
+.pin-l { left: 0; }
+.row-label { min-width: 7em; }
+.break-all { overflow-wrap: anywhere; }
+.page-share > .flex-col > div { padding: 0.5em 1em; }
+.cat-personal-modal, .rule-modal-mask { position: fixed; inset: 0; justify-content: center; align-items: center; }
+.cat-personal-modal .info-box-content { max-height: 65vh; overflow: auto; }
+.audit-pass { display: none; }
+.personal-info { position: static; display: block; }
+.van-dialog { background: white; padding: 1em; }
