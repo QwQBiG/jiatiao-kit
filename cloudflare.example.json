@@ -1,0 +1,15 @@
+{
+  "accountId": "",
+  "projectName": "",
+  "productionBranch": "main",
+  "previewBranch": "template-preview",
+  "compatibilityDate": "2026-08-31",
+  "databases": {
+    "preview": { "name": "", "id": "" },
+    "production": { "name": "", "id": "" }
+  },
+  "permissions": {
+    "preview": { "ownerEmails": [], "teamDomain": "", "aud": "", "protected": false },
+    "production": { "ownerEmails": [], "teamDomain": "", "aud": "", "protected": false }
+  }
+}
